@@ -12,8 +12,6 @@ def load_phone_book():
         with open(PHONE_BOOK_FILE, "r") as file:
             return json.load(file)
     else:
-        # with open(PHONE_BOOK_FILE, "w") :
-        #     pass
         return {}
 
 
@@ -42,13 +40,10 @@ phone_book = load_phone_book()
 
 def handle_request(request: str):
     global phone_book
-    print(request)
     parts = request.split("^")
-    print(parts)
     command = parts[0]
     phone_book = load_phone_book()
     if command == "ADD":
-        print(parts)
         name, surname, phone, note = parts[1:]
 
         last_id = get_last_id(PHONE_BOOK_FILE)
@@ -71,7 +66,6 @@ def handle_request(request: str):
 
     elif command == "SEARCH":
         query = "^".join(parts[1:])
-        print(query)
         results = [] #Проверка на входящую подстроку из запроса и соответствующий вывод данных
         for entry_id, details in phone_book.items():
             if (query.lower() in details['name'].lower() or query.lower() in details['surname'].lower()
